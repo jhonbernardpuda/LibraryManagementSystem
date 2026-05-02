@@ -11,24 +11,26 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
         </Grid.RowDefinitions>
 
         <!-- Top -->
-        <StackPanel Orientation="Horizontal" Margin="10">
+        <StackPanel Orientation="Horizontal" 
+                    Margin="10">
 
             <DatePicker x:Name="dpDate"
-Width="150"
-Margin="5"/>
+                        Width="150"
+                        Margin="5"/>
 
             <Button Content="Load Students"
-Width="120"
-Margin="5"
-Click="LoadStudents_Click"/>
+                    Width="120"
+                    Margin="5"
+                    Click="LoadStudents_Click"/>
 
         </StackPanel>
 
         <!-- Table -->
         <DataGrid x:Name="AttendanceGrid"
-Grid.Row="1"
-Margin="10"
-AutoGenerateColumns="False">
+                    Grid.Row="1"
+                    Margin="10"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False">
 
             <DataGrid.Columns>
 
@@ -70,17 +72,16 @@ Binding="{Binding year_section}" Width="*"/>
 
         </DataGrid>
 
-        <!-- Save -->
         <Button x:Name="btnSave"
-Content="Save Attendance"
-Grid.Row="2"                
-Height="35"
-Width="150"
-Margin="10"
-HorizontalAlignment="Right"
-Background="#2E7D32"
-Foreground="White"
-Click="Save_Click"/>
+                Content="Save Attendance"
+                Grid.Row="2"                
+                Height="35"
+                Width="150"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Background="Green"
+                Foreground="White"
+                Click="Save_Click"/>
 
     </Grid>
 </UserControl>
