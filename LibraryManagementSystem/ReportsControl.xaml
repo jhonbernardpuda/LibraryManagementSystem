@@ -1,0 +1,307 @@
+﻿<UserControl x:Class="LibraryManagementSystem.ReportsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F5F7FA"
+             FontFamily="Segoe UI">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Summary Cards -->
+            <Grid Grid.Row="0" Margin="0 0 0 16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Total Books -->
+                <Border Grid.Column="0"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16"
+                        Margin="0 0 10 0">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL BOOKS"
+                                   FontSize="10" Foreground="#6B7280"
+                                   FontWeight="SemiBold"
+                                   Margin="0 0 0 6"/>
+                        <TextBlock x:Name="lblTotalBooks"
+                                   Text="0"
+                                   FontSize="28" FontWeight="Bold"
+                                   Foreground="#178AE5"/>
+                        <TextBlock x:Name="lblTotalTitles"
+                                   Text="0 titles"
+                                   FontSize="11" Foreground="#6B7280"
+                                   Margin="0 4 0 0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Total Students -->
+                <Border Grid.Column="1"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16"
+                        Margin="0 0 10 0">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL STUDENTS"
+                                   FontSize="10" Foreground="#6B7280"
+                                   FontWeight="SemiBold"
+                                   Margin="0 0 0 6"/>
+                        <TextBlock x:Name="lblTotalStudents"
+                                   Text="0"
+                                   FontSize="28" FontWeight="Bold"
+                                   Foreground="#16A34A"/>
+                        <TextBlock x:Name="lblActiveStudents"
+                                   Text="0 active"
+                                   FontSize="11" Foreground="#6B7280"
+                                   Margin="0 4 0 0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Total Transactions -->
+                <Border Grid.Column="2"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16"
+                        Margin="0 0 10 0">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL TRANSACTIONS"
+                                   FontSize="10" Foreground="#6B7280"
+                                   FontWeight="SemiBold"
+                                   Margin="0 0 0 6"/>
+                        <TextBlock x:Name="lblTotalTransactions"
+                                   Text="0"
+                                   FontSize="28" FontWeight="Bold"
+                                   Foreground="#CA8A04"/>
+                        <TextBlock x:Name="lblActiveTransactions"
+                                   Text="0 active"
+                                   FontSize="11" Foreground="#6B7280"
+                                   Margin="0 4 0 0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Total Penalties -->
+                <Border Grid.Column="3"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL PENALTIES"
+                                   FontSize="10" Foreground="#6B7280"
+                                   FontWeight="SemiBold"
+                                   Margin="0 0 0 6"/>
+                        <TextBlock x:Name="lblTotalPenalties"
+                                   Text="₱0.00"
+                                   FontSize="28" FontWeight="Bold"
+                                   Foreground="#DC2626"/>
+                        <TextBlock x:Name="lblOverdueCount"
+                                   Text="0 overdue"
+                                   FontSize="11" Foreground="#6B7280"
+                                   Margin="0 4 0 0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Two column tables -->
+            <Grid Grid.Row="1" Margin="0 0 0 16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Most Borrowed Books -->
+                <Border Grid.Column="0"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Margin="0 0 10 0">
+                    <StackPanel>
+                        <TextBlock Text="Most Borrowed Books"
+                                   FontSize="13" FontWeight="Bold"
+                                   Foreground="#1E2840"
+                                   Padding="14 12"/>
+                        <Separator Background="#E5E7EB"/>
+                        <DataGrid x:Name="dgTopBooks"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#F3F4F6"
+                                  BorderThickness="0"
+                                  Background="White"
+                                  RowBackground="White"
+                                  AlternatingRowBackground="#FAFAFA"
+                                  FontSize="12"
+                                  ColumnHeaderHeight="34"
+                                  RowHeight="34"
+                                  HeadersVisibility="Column">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#F9FAFB"/>
+                                    <Setter Property="Foreground" Value="#6B7280"/>
+                                    <Setter Property="FontSize" Value="11"/>
+                                    <Setter Property="Padding" Value="12 0"/>
+                                    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Padding" Value="12 0"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#EFF6FF"/>
+                                            <Setter Property="Foreground" Value="#1E40AF"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Book Title" Binding="{Binding title}"  Width="*"/>
+                                <DataGridTextColumn Header="Times"      Binding="{Binding count}"  Width="70"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Students with Most Borrows -->
+                <Border Grid.Column="1"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock Text="Most Active Students"
+                                   FontSize="13" FontWeight="Bold"
+                                   Foreground="#1E2840"
+                                   Padding="14 12"/>
+                        <Separator Background="#E5E7EB"/>
+                        <DataGrid x:Name="dgTopStudents"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#F3F4F6"
+                                  BorderThickness="0"
+                                  Background="White"
+                                  RowBackground="White"
+                                  AlternatingRowBackground="#FAFAFA"
+                                  FontSize="12"
+                                  ColumnHeaderHeight="34"
+                                  RowHeight="34"
+                                  HeadersVisibility="Column">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#F9FAFB"/>
+                                    <Setter Property="Foreground" Value="#6B7280"/>
+                                    <Setter Property="FontSize" Value="11"/>
+                                    <Setter Property="Padding" Value="12 0"/>
+                                    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Padding" Value="12 0"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#EFF6FF"/>
+                                            <Setter Property="Foreground" Value="#1E40AF"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Student"    Binding="{Binding full_name}" Width="*"/>
+                                <DataGridTextColumn Header="Student ID" Binding="{Binding user_id}"   Width="100"/>
+                                <DataGridTextColumn Header="Borrows"    Binding="{Binding count}"     Width="70"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Overdue Students -->
+            <Border Grid.Row="2"
+                    Background="White"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel>
+                    <TextBlock Text="Overdue Students"
+                               FontSize="13" FontWeight="Bold"
+                               Foreground="#1E2840"
+                               Padding="14 12"/>
+                    <Separator Background="#E5E7EB"/>
+                    <DataGrid x:Name="dgOverdueStudents"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="#F3F4F6"
+                              BorderThickness="0"
+                              Background="White"
+                              RowBackground="White"
+                              AlternatingRowBackground="#FAFAFA"
+                              FontSize="12"
+                              ColumnHeaderHeight="34"
+                              RowHeight="34"
+                              HeadersVisibility="Column">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#F9FAFB"/>
+                                <Setter Property="Foreground" Value="#6B7280"/>
+                                <Setter Property="FontSize" Value="11"/>
+                                <Setter Property="Padding" Value="12 0"/>
+                                <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                                <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Padding" Value="12 0"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#FFF1F2"/>
+                                        <Setter Property="Foreground" Value="#9F1239"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Student"      Binding="{Binding full_name}"   Width="*"/>
+                            <DataGridTextColumn Header="Student ID"   Binding="{Binding user_id}"     Width="110"/>
+                            <DataGridTextColumn Header="Book"         Binding="{Binding title}"       Width="*"/>
+                            <DataGridTextColumn Header="Due Date"     Width="110">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="due_date" StringFormat="MMM dd, yyyy"/>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Days Overdue" Binding="{Binding days_overdue}" Width="110"/>
+                            <DataGridTextColumn Header="Penalty"      Binding="{Binding penalty}"      Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

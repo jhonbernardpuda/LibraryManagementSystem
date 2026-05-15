@@ -1,0 +1,316 @@
+﻿<UserControl x:Class="LibraryManagementSystem.BooksControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F5F7FA"
+             FontFamily="Segoe UI">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top bar: Search + Add button -->
+        <Grid Grid.Row="0" Margin="0 0 0 14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Background="White"
+                    BorderBrush="#D1D5DB"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Padding="8 0"
+                    Margin="0 0 10 0">
+                <TextBox x:Name="txtSearch"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         VerticalContentAlignment="Center"
+                         Height="32"
+                         FontSize="12"
+                         Foreground="#374151"
+                         TextChanged="txtSearch_TextChanged">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <TextBlock Text="Search title, author, genre..."
+                                                               Foreground="#9CA3AF"
+                                                               FontSize="12"
+                                                               Margin="2 0"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </Border>
+
+            <Button x:Name="btnAdd"
+                    Grid.Column="1"
+                    Content="+ Add Book"
+                    Height="34"
+                    Padding="16 0"
+                    FontSize="12"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    Background="#178AE5"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="btnAdd_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1279CC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Inline Form (hidden by default) -->
+        <Border x:Name="pnlForm"
+                Grid.Row="1"
+                Background="White"
+                BorderBrush="#E5E7EB"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0 0 0 14"
+                Visibility="Collapsed">
+            <StackPanel>
+
+                <TextBlock x:Name="lblFormTitle"
+                           Text="Add Book"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#1E2840"
+                           Margin="0 0 0 16"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Title -->
+                    <StackPanel Grid.Column="0" Margin="0 0 10 0">
+                        <TextBlock Text="Title" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <TextBox x:Name="txtTitle"
+                                     Height="30" FontSize="12"
+                                     Padding="8 0"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Author -->
+                    <StackPanel Grid.Column="1" Margin="0 0 10 0">
+                        <TextBlock Text="Author" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <TextBox x:Name="txtAuthor"
+                                     Height="30" FontSize="12"
+                                     Padding="8 0"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Genre -->
+                    <StackPanel Grid.Column="2" Margin="0 0 10 0">
+                        <TextBlock Text="Genre" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <TextBox x:Name="txtGenre"
+                                     Height="30" FontSize="12"
+                                     Padding="8 0"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Copies -->
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="Copies" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <TextBox x:Name="txtCopies"
+                                     Height="30" FontSize="12"
+                                     Padding="8 0"
+                                     BorderThickness="0"
+                                     VerticalContentAlignment="Center"
+                                     Text="1"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Form buttons -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0 16 0 0">
+                    <Button Content="Cancel"
+                            Width="80" Height="32"
+                            FontSize="12"
+                            Background="White"
+                            BorderBrush="#D1D5DB"
+                            BorderThickness="1"
+                            Margin="0 0 8 0"
+                            Cursor="Hand"
+                            Click="btnCancel_Click"/>
+                    <Button Content="Save"
+                            Width="80" Height="32"
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Background="#178AE5"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="btnSave_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="5" Padding="4">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#1279CC"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+
+        <!-- Table -->
+        <Border Grid.Row="2"
+                Background="White"
+                BorderBrush="#E5E7EB"
+                BorderThickness="1"
+                CornerRadius="8">
+            <DataGrid x:Name="dgBooks"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#F3F4F6"
+                      BorderThickness="0"
+                      Background="White"
+                      RowBackground="White"
+                      AlternatingRowBackground="#FAFAFA"
+                      FontSize="12"
+                      ColumnHeaderHeight="38"
+                      RowHeight="36">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#F9FAFB"/>
+                        <Setter Property="Foreground" Value="#6B7280"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Padding" Value="12 0"/>
+                        <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="12 0"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#EFF6FF"/>
+                                <Setter Property="Foreground" Value="#1E40AF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title"     Binding="{Binding title}"            Width="*"/>
+                    <DataGridTextColumn Header="Author"    Binding="{Binding author}"           Width="180"/>
+                    <DataGridTextColumn Header="Genre"     Binding="{Binding genre}"            Width="120"/>
+                    <DataGridTextColumn Header="Copies"    Binding="{Binding total_copies}"     Width="70"/>
+                    <DataGridTextColumn Header="Available" Binding="{Binding available_copies}" Width="80"/>
+                    <DataGridTemplateColumn Header="Actions" Width="160">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="8 0">
+                                    <Button Content="Edit"
+                                            Width="60" Height="24"
+                                            FontSize="11"
+                                            Foreground="White"
+                                            Background="#178AE5"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Margin="0 0 6 0"
+                                            Tag="{Binding id}"
+                                            Click="btnEdit_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="4 0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#1279CC"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Content="Delete"
+                                            Width="60" Height="24"
+                                            FontSize="11"
+                                            Foreground="White"
+                                            Background="#EF4444"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Tag="{Binding id}"
+                                            Click="btnDelete_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="4 0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#DC2626"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

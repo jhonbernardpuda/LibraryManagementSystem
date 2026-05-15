@@ -1,0 +1,349 @@
+﻿<UserControl x:Class="LibraryManagementSystem.BorrowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F5F7FA"
+             FontFamily="Segoe UI">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tab Row: Active / Returned -->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Margin="0 0 0 14">
+            <Button x:Name="btnTabActive"
+                    Content="Active"
+                    Height="34" Padding="20 0"
+                    FontSize="12" FontWeight="SemiBold"
+                    Foreground="White"
+                    Background="#178AE5"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="btnTabActive_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5 0 0 5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="btnTabReturned"
+                    Content="Returned"
+                    Height="34" Padding="20 0"
+                    FontSize="12" FontWeight="SemiBold"
+                    Foreground="#6B7280"
+                    Background="White"
+                    BorderThickness="1 1 1 1"
+                    BorderBrush="#D1D5DB"
+                    Cursor="Hand"
+                    Click="btnTabReturned_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="0 5 5 0"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <!-- Spacer -->
+            <Border Width="10"/>
+
+            <!-- New Borrow button -->
+            <Button x:Name="btnNewBorrow"
+                    Content="+ New Borrow"
+                    Height="34" Padding="16 0"
+                    FontSize="12" FontWeight="SemiBold"
+                    Foreground="White"
+                    Background="#16A34A"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="btnNewBorrow_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#15803D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+
+        <!-- Inline Borrow Form (hidden by default) -->
+        <Border x:Name="pnlForm"
+                Grid.Row="1"
+                Background="White"
+                BorderBrush="#E5E7EB"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0 0 0 14"
+                Visibility="Collapsed">
+            <StackPanel>
+
+                <TextBlock Text="New Borrow Transaction"
+                           FontSize="14" FontWeight="Bold"
+                           Foreground="#1E2840"
+                           Margin="0 0 0 16"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="160"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Student -->
+                    <StackPanel Grid.Column="0" Margin="0 0 10 0">
+                        <TextBlock Text="Student" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <ComboBox x:Name="cmbStudent"
+                                      Height="30" FontSize="12"
+                                      BorderThickness="0"
+                                      VerticalContentAlignment="Center"
+                                      Padding="6 0"
+                                      DisplayMemberPath="display"
+                                      SelectedValuePath="id"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Book -->
+                    <StackPanel Grid.Column="1" Margin="0 0 10 0">
+                        <TextBlock Text="Book" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <ComboBox x:Name="cmbBook"
+                                      Height="30" FontSize="12"
+                                      BorderThickness="0"
+                                      VerticalContentAlignment="Center"
+                                      Padding="6 0"
+                                      DisplayMemberPath="display"
+                                      SelectedValuePath="id"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Due Date -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Due Date" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
+                            <DatePicker x:Name="dpDueDate"
+                                        Height="30" FontSize="12"
+                                        BorderThickness="0"
+                                        VerticalContentAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Form buttons -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0 16 0 0">
+                    <Button Content="Cancel"
+                            Width="80" Height="32"
+                            FontSize="12"
+                            Background="White"
+                            BorderBrush="#D1D5DB"
+                            BorderThickness="1"
+                            Margin="0 0 8 0"
+                            Cursor="Hand"
+                            Click="btnCancel_Click"/>
+                    <Button Content="Confirm"
+                            Width="80" Height="32"
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Background="#16A34A"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="btnConfirm_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="5" Padding="4">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#15803D"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+
+        <!-- Table -->
+        <Border Grid.Row="2"
+                Background="White"
+                BorderBrush="#E5E7EB"
+                BorderThickness="1"
+                CornerRadius="8">
+            <DataGrid x:Name="dgTransactions"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="#F3F4F6"
+                      BorderThickness="0"
+                      Background="White"
+                      RowBackground="White"
+                      AlternatingRowBackground="#FAFAFA"
+                      FontSize="12"
+                      ColumnHeaderHeight="38"
+                      RowHeight="36">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#F9FAFB"/>
+                        <Setter Property="Foreground" Value="#6B7280"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Padding" Value="12 0"/>
+                        <Setter Property="BorderBrush" Value="#E5E7EB"/>
+                        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="12 0"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#EFF6FF"/>
+                                <Setter Property="Foreground" Value="#1E40AF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Student"     Binding="{Binding full_name}"   Width="*"/>
+                    <DataGridTextColumn Header="Student ID"  Binding="{Binding user_id}"     Width="110"/>
+                    <DataGridTextColumn Header="Book"        Binding="{Binding title}"       Width="*"/>
+                    <DataGridTextColumn Header="Borrow Date" Width="120">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="borrow_date" StringFormat="MMM dd, yyyy"/>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Due Date" Width="110">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="due_date" StringFormat="MMM dd, yyyy"/>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Return Date" Width="110">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="return_date" StringFormat="MMM dd, yyyy"/>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Status" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="4"
+                                        Padding="6 2"
+                                        HorizontalAlignment="Left"
+                                        Margin="8 0">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#FEF9C3"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding status}" Value="returned">
+                                                    <Setter Property="Background" Value="#DCFCE7"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding status}" Value="overdue">
+                                                    <Setter Property="Background" Value="#FEE2E2"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <TextBlock FontSize="11" FontWeight="SemiBold">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="Borrowed"/>
+                                                <Setter Property="Foreground" Value="#CA8A04"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding status}" Value="returned">
+                                                        <Setter Property="Text" Value="Returned"/>
+                                                        <Setter Property="Foreground" Value="#16A34A"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding status}" Value="overdue">
+                                                        <Setter Property="Text" Value="Overdue"/>
+                                                        <Setter Property="Foreground" Value="#DC2626"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Actions" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Return"
+                                        Width="70" Height="24"
+                                        FontSize="11"
+                                        Foreground="White"
+                                        Background="#178AE5"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Margin="8 0"
+                                        Tag="{Binding id}"
+                                        Click="btnReturn_Click">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding status}" Value="returned">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="4 0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#1279CC"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

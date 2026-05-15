@@ -1,0 +1,154 @@
+﻿<Window x:Class="LibraryManagementSystem.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LibraryManagementSystem — Login"
+        Height="500"
+        Width="420"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="White"
+        FontFamily="Segoe UI">
+
+    <Grid>
+        <!-- Card -->
+        <Border Width="340"
+                Padding="30"
+                Background="White"
+                CornerRadius="10"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20"
+                                  ShadowDepth="2"
+                                  Opacity="0.08"
+                                  Color="#000000"/>
+            </Border.Effect>
+
+            <StackPanel>
+
+                <!-- Logo / Title -->
+                <TextBlock Text="Log in"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="Black"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 4"/>
+
+                <!-- Divider -->
+                <Separator Background="#E5E7EB" Margin="0 0 0 20"/>
+
+                <!-- Username -->
+                <TextBlock Text="Username"
+                           FontSize="11"
+                           Foreground="Black"
+                           Margin="0 0 0 4"/>
+                <Border Background="#F9FAFB"
+                        BorderBrush="#D1D5DB"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Margin="0 0 0 14">
+                    <TextBox x:Name="txtUser"
+                             Height="32"
+                             FontSize="13"
+                             Padding="10 0"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             VerticalContentAlignment="Center"/>
+                </Border>
+
+                <!-- Password -->
+                <TextBlock Text="Password"
+                           FontSize="11"
+                           Foreground="Black"
+                           Margin="0 0 0 4"/>
+                <Border Background="#F9FAFB"
+                        BorderBrush="#D1D5DB"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Margin="0 0 0 6">
+                    <PasswordBox x:Name="txtPass"
+                                 Height="32"
+                                 FontSize="13"
+                                 Padding="10 0"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 VerticalContentAlignment="Center"/>
+                </Border>
+
+                <!-- Error message (hidden by default) -->
+                <TextBlock x:Name="lblError"
+                           Text="Invalid username or password."
+                           Foreground="#B91C1C"
+                           FontSize="11"
+                           Margin="0 4 0 10"
+                           Visibility="Collapsed"/>
+
+                <!-- Login Button -->
+                <Button x:Name="btnLogin"
+                        Content="Log In"
+                        Height="40"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="White"
+                        Background="Black"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Margin="0 8 0 0"
+                        Click="Login_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    Padding="0">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#1279CC"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#0E6AAF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Content="Search Books"
+                        Height="40" 
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="Black"
+                        Background="White"
+                        Cursor="Hand"
+                        Margin="5 5 5 5"
+                        Click="btnSearchBooks_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                    CornerRadius="6" Padding="0">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#15803D"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#166534"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

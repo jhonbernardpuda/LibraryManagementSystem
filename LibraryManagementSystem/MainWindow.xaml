@@ -1,0 +1,161 @@
+﻿<Window x:Class="LibraryManagementSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LibraryManagementSystem — Main Page"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F7FA"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#4B5563"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="16 0 0 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="2 0 0 0"
+                            BorderBrush="Transparent"
+                            Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F0F5FF"/>
+                                <Setter Property="Foreground" Value="#1E2840"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ── SIDEBAR ── -->
+        <Grid Background="White">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.08" Color="#000000"/>
+            </Grid.Effect>
+
+            <DockPanel LastChildFill="False">
+
+                <!-- Logo -->
+                <StackPanel DockPanel.Dock="Top" Margin="16 18 16 0">
+                    <TextBlock Text="LibraryHub"
+                               FontSize="18" FontWeight="Bold"
+                               Foreground="Black"/>
+                </StackPanel>
+
+                <!-- Divider -->
+                <Separator DockPanel.Dock="Top" Background="#E5E7EB" Margin="0 12 0 0"/>
+
+                <!-- User badge -->
+                <StackPanel DockPanel.Dock="Top"
+                            Background="#F8FAFC"
+                            Margin="0" >
+                    <Border BorderBrush="#E5E7EB" BorderThickness="0 1 0 1" Padding="16 10">
+                        <StackPanel>
+                            <TextBlock x:Name="lblUserName"
+                                       FontSize="12" FontWeight="SemiBold"
+                                       Foreground="#1E2840"/>
+                            <TextBlock x:Name="lblUserRole"
+                                       FontSize="10" Foreground="#6B7280"
+                                       Margin="0 2 0 0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Nav buttons -->
+                <StackPanel DockPanel.Dock="Top" Margin="0 8 0 0">
+                    <Button x:Name="btnDashboard"    
+                            Content="Dashboard"      
+                            Height="40" 
+                            Click="Dashboard_Click"   
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnUsers"
+                            Content="Users"
+                            Height="40" 
+                            Click="Users_Click"
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnBooks"        
+                            Content="Books"          
+                            Height="40" 
+                            Click="Books_Click"       
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnBorrowers"    
+                            Content="Borrowers"      
+                            Height="40" 
+                            Click="Borrowers_Click"   
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnBorrow"       
+                            Content="Borrow / Return" 
+                            Height="40" 
+                            Click="Borrow_Click"    
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnPenalties"    
+                            Content="Penalties"      
+                            Height="40" 
+                            Click="Penalties_Click"   
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnReports"      
+                            Content="Reports"       
+                            Height="40" 
+                            Click="Reports_Click"     
+                            Style="{StaticResource NavButton}"/>
+                    <Button x:Name="btnLogs"         
+                            Content="Activity Logs"  
+                            Height="40" 
+                            Click="Logs_Click"        
+                            Style="{StaticResource NavButton}"/>
+                </StackPanel>
+
+                <!-- Logout pinned to bottom -->
+                <Button DockPanel.Dock="Bottom"
+                        Content="Log Out"
+                        Height="40"
+                        Click="Logout_Click"
+                        Style="{StaticResource NavButton}"
+                        Foreground="#B91C1C"
+                        Margin="0 0 0 8"/>
+
+            </DockPanel>
+        </Grid>
+
+        <!-- ── CONTENT AREA ── -->
+        <Grid Grid.Column="1" Background="#F5F7FA">
+
+            <!-- Top bar -->
+            <Border DockPanel.Dock="Top"
+                    Background="White"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="0 0 0 1"
+                    Height="48"
+                    VerticalAlignment="Top"
+                    Panel.ZIndex="1">
+                <TextBlock x:Name="lblPageTitle"
+                           Text="Dashboard"
+                           FontSize="14" FontWeight="Bold"
+                           Foreground="#1E2840"
+                           VerticalAlignment="Center"
+                           Margin="20 0"/>
+            </Border>
+
+            <!-- Frame pushed below topbar -->
+            <Frame x:Name="MainFrame" Margin="0 48 0 0" NavigationUIVisibility="Hidden"/>
+
+        </Grid>
+    </Grid>
+</Window>
