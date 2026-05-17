@@ -58,21 +58,27 @@ namespace LibraryManagementSystem
             string query = @"SELECT bt.id,
                                     br.full_name, br.user_id,
                                     bk.title, bt.due_date,
-                                    DATEDIFF(CURDATE(), bt.due_date) AS days_overdue,
-                                    DATEDIFF(CURDATE(), bt.due_date) * @rate AS penalty
+                                    GREATEST(DATEDIFF(CURDATE(), bt.due_date), 0) AS days_overdue,
+                                    GREATEST(DATEDIFF(CURDATE(), bt.due_date), 0) * @rate AS penalty
                              FROM borrow_transactions bt
                              JOIN borrowers br ON bt.borrower_id = br.id
                              JOIN books bk     ON bt.book_id     = bk.id
                              WHERE bt.return_date IS NULL
-                               AND bt.due_date < CURDATE()
+                               AND bt.status = 'overdue'
                              ORDER BY bt.due_date ASC";
             MySqlCommand cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@rate", rate);
             DataTable dt = new DataTable();
             new MySqlDataAdapter(cmd).Fill(dt);
 
+            // Add a new string column for formatted penalty
+            dt.Columns.Add("penalty_display", typeof(string));
             foreach (DataRow row in dt.Rows)
-                row["penalty"] = $"₱{Convert.ToDecimal(row["penalty"]):F2}";
+            {
+                decimal pen = Convert.ToDecimal(row["penalty"]);
+                if (pen < 0) pen = 0;
+                row["penalty_display"] = $"₱{pen:F2}";
+            }
 
             dgPenalties.ItemsSource = dt.DefaultView;
             colActions.Visibility = Visibility.Visible;
@@ -82,22 +88,46 @@ namespace LibraryManagementSystem
         private void LoadHistory(MySqlConnection conn, decimal rate)
         {
             string query = @"SELECT bt.id,
-                                    br.full_name, br.user_id,
-                                    bk.title, bt.due_date,
-                                    bt.return_date,
-                                    bt.penalty_amount AS penalty
-                             FROM borrow_transactions bt
-                             JOIN borrowers br ON bt.borrower_id = br.id
-                             JOIN books bk     ON bt.book_id     = bk.id
-                             WHERE bt.return_date IS NOT NULL
-                               AND bt.penalty_amount > 0
-                             ORDER BY bt.return_date DESC";
+                            br.full_name, br.user_id,
+                            bk.title, bt.due_date,
+                            bt.return_date,
+                            bt.penalty_amount AS penalty
+                     FROM borrow_transactions bt
+                     JOIN borrowers br ON bt.borrower_id = br.id
+                     JOIN books bk     ON bt.book_id     = bk.id
+                     WHERE bt.return_date IS NOT NULL
+                       AND bt.penalty_amount >= 0
+                       AND bt.status = 'returned'
+                     ORDER BY bt.return_date DESC";
             MySqlCommand cmd = new MySqlCommand(query, conn);
             DataTable dt = new DataTable();
             new MySqlDataAdapter(cmd).Fill(dt);
 
+            // Add formatted penalty display column
+            dt.Columns.Add("penalty_display", typeof(string));
             foreach (DataRow row in dt.Rows)
-                row["penalty"] = $"₱{Convert.ToDecimal(row["penalty"]):F2}";
+            {
+                decimal pen = Convert.ToDecimal(row["penalty"]);
+                if (pen < 0) pen = 0;
+                row["penalty_display"] = $"₱{pen:F2}";
+            }
+
+            // Add days_overdue column for history tab
+            dt.Columns.Add("days_overdue", typeof(string));
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["return_date"] != DBNull.Value && row["due_date"] != DBNull.Value)
+                {
+                    DateTime due = Convert.ToDateTime(row["due_date"]);
+                    DateTime ret = Convert.ToDateTime(row["return_date"]);
+                    int days = (int)(ret - due).TotalDays;
+                    row["days_overdue"] = days > 0 ? days.ToString() : "0";
+                }
+                else
+                {
+                    row["days_overdue"] = "0";
+                }
+            }
 
             dgPenalties.ItemsSource = dt.DefaultView;
             colActions.Visibility = Visibility.Collapsed;
@@ -192,8 +222,8 @@ namespace LibraryManagementSystem
                             // Get details for receipt
                             string getInfo = @"SELECT bt.book_id, br.full_name, br.user_id,
                                                       bk.title, bt.due_date,
-                                                      DATEDIFF(CURDATE(), bt.due_date) AS days,
-                                                      DATEDIFF(CURDATE(), bt.due_date) * @rate AS penalty
+                                                      GREATEST(DATEDIFF(CURDATE(), bt.due_date), 0) AS days,
+                                                      GREATEST(DATEDIFF(CURDATE(), bt.due_date), 0) * @rate AS penalty
                                                FROM borrow_transactions bt
                                                JOIN borrowers br ON bt.borrower_id = br.id
                                                JOIN books bk     ON bt.book_id     = bk.id
@@ -266,11 +296,11 @@ namespace LibraryManagementSystem
                 $"══════════════════════════════\n" +
                 $"Date Returned : {DateTime.Today:MMM dd, yyyy}\n" +
                 $"Student       : {name}\n" +
-                $"Student ID    : {uid}\n" +
+                $"User/Student ID    : {uid}\n" +
                 $"Book          : {title}\n" +
                 $"──────────────────────────────\n" +
                 $"Due Date      : {dueDate:MMM dd, yyyy}\n" +
-                $"Days Overdue  : {days} days\n" +
+                $"Days Overdue  : {days} day/s\n" +
                 $"Rate          : ₱{rate:F2}/day\n" +
                 $"──────────────────────────────\n" +
                 $"TOTAL PENALTY : ₱{penalty:F2}\n" +

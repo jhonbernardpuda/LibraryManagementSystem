@@ -115,7 +115,7 @@
 
                     <!-- User ID -->
                     <StackPanel Grid.Column="0" Margin="0 0 10 0">
-                        <TextBlock Text="User ID" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <TextBlock Text="User/Student ID" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
                         <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
                             <TextBox x:Name="txtUserId"
                                      Height= "30"
@@ -140,7 +140,7 @@
                     </StackPanel>
 
                     <!-- Course -->
-                    <StackPanel Grid.Column="2">
+                    <StackPanel x:Name="pnlCourse" Grid.Column="2">
                         <TextBlock Text="Course" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
                         <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
                             <TextBox x:Name="txtCourse"

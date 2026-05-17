@@ -116,7 +116,7 @@
 
                     <!-- Student -->
                     <StackPanel Grid.Column="0" Margin="0 0 10 0">
-                        <TextBlock Text="Student" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
+                        <TextBlock Text="Borrower" FontSize="11" Foreground="#6B7280" Margin="0 0 0 4"/>
                         <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="4">
                             <ComboBox x:Name="cmbStudent"
                                       Height="30" FontSize="12"
@@ -242,8 +242,8 @@
                 </DataGrid.CellStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Student"     Binding="{Binding full_name}"   Width="*"/>
-                    <DataGridTextColumn Header="Student ID"  Binding="{Binding user_id}"     Width="110"/>
+                    <DataGridTextColumn Header="Name"     Binding="{Binding full_name}"   Width="*"/>
+                    <DataGridTextColumn Header="User/Student ID"  Binding="{Binding user_id}"     Width="110"/>
                     <DataGridTextColumn Header="Book"        Binding="{Binding title}"       Width="*"/>
                     <DataGridTextColumn Header="Borrow Date" Width="120">
                         <DataGridTextColumn.Binding>
@@ -304,41 +304,77 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Actions" Width="100">
+                    <DataGridTemplateColumn Header="Actions" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Return"
-                                        Width="70" Height="24"
-                                        FontSize="11"
-                                        Foreground="White"
-                                        Background="#178AE5"
-                                        BorderThickness="0"
-                                        Cursor="Hand"
-                                        Margin="8 0"
-                                        Tag="{Binding id}"
-                                        Click="btnReturn_Click">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding status}" Value="returned">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="4 0">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="#1279CC"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
+                                <StackPanel Orientation="Horizontal" Margin="8 0">
+
+                                    <!-- Return button -->
+                                    <Button Content="Return"
+                        Width="65" Height="24"
+                        FontSize="11" Foreground="White"
+                        Background="#178AE5" BorderThickness="0"
+                        Cursor="Hand" Margin="0 0 5 0"
+                        Tag="{Binding id}"
+                        Click="btnReturn_Click">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding status}" Value="returned">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="4 0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#1279CC"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                    <!-- Mark Overdue button -->
+                                    <Button Content="Overdue"
+                        Width="65" Height="24"
+                        FontSize="11" Foreground="White"
+                        Background="#DC2626" BorderThickness="0"
+                        Cursor="Hand" Margin="0 0 0 0"
+                        Tag="{Binding id}"
+                        Click="btnMarkOverdue_Click">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding status}" Value="returned">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding status}" Value="overdue">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="4 0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#B91C1C"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

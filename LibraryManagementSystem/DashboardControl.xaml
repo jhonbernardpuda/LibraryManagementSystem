@@ -68,7 +68,7 @@
                         Padding="16"
                         Margin="0 0 10 0">
                     <StackPanel>
-                        <TextBlock Text="TOTAL STUDENTS"
+                        <TextBlock Text="TOTAL BORROWERS"
                                    FontSize="10" Foreground="#6B7280"
                                    FontWeight="SemiBold"
                                    Margin="0 0 0 6"/>

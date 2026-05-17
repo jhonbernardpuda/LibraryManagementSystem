@@ -1,7 +1,7 @@
 ﻿<Window x:Class="LibraryManagementSystem.BookSearchWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="LibraryOS — Book Availability"
+        Title="LibraHub — Book Search"
         Height="560" Width="800"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"

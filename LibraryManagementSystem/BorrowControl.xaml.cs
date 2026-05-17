@@ -100,7 +100,7 @@ namespace LibraryManagementSystem
         {
             LoadStudentsCombo();
             LoadBooksCombo();
-            dpDueDate.SelectedDate = DateTime.Today.AddDays(14);
+            dpDueDate.SelectedDate = DateTime.Today.AddDays(1);
             pnlForm.Visibility = Visibility.Visible;
             btnNewBorrow.IsEnabled = false;
         }
@@ -304,6 +304,62 @@ namespace LibraryManagementSystem
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error processing return:\n" + ex.Message, "Error",
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private void btnMarkOverdue_Click(object sender, RoutedEventArgs e)
+        {
+            int id = Convert.ToInt32(((Button)sender).Tag);
+
+            var result = MessageBox.Show(
+                "Mark this transaction as overdue?",
+                "Confirm",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    using (MySqlConnection conn = db.GetConnection())
+                    {
+                        conn.Open();
+
+                        // Get details for log
+                        string getInfo = @"SELECT br.full_name, bk.title
+                                   FROM borrow_transactions bt
+                                   JOIN borrowers br ON bt.borrower_id = br.id
+                                   JOIN books bk     ON bt.book_id     = bk.id
+                                   WHERE bt.id = @id";
+                        MySqlCommand getCmd = new MySqlCommand(getInfo, conn);
+                        getCmd.Parameters.AddWithValue("@id", id);
+                        MySqlDataReader r = getCmd.ExecuteReader();
+                        string name = "", title = "";
+                        if (r.Read())
+                        {
+                            name = r["full_name"].ToString();
+                            title = r["title"].ToString();
+                        }
+                        r.Close();
+
+                        // Mark as overdue
+                        string query = @"UPDATE borrow_transactions
+                                 SET status = 'overdue'
+                                 WHERE id = @id AND status = 'borrowed'";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+
+                        new ActivityLogs().Log(Login.CurrentUserId, "Marked Overdue",
+                            $"{name} - \"{title}\" manually marked as overdue.");
+
+                        LoadTransactions();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error marking overdue:\n" + ex.Message, "Error",
                                     MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }

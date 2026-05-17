@@ -71,6 +71,7 @@ namespace LibraryManagementSystem
             cmbType.SelectedIndex = 0;
             cmbYearLevel.SelectedIndex = -1;
             pnlYearLevel.Visibility = Visibility.Visible;
+            pnlCourse.Visibility = Visibility.Visible;
             txtEmail.Text = "";
         }
 
@@ -116,9 +117,9 @@ namespace LibraryManagementSystem
                         }
 
                         // Show or hide year level based on type
-                        pnlYearLevel.Visibility = type == "Student"
-                            ? Visibility.Visible
-                            : Visibility.Collapsed;
+                        pnlCourse.Visibility = type == "Student" ? 
+                            Visibility.Visible : 
+                            Visibility.Collapsed;
 
                         // Match year level to ComboBox (only if Student)
                         if (type == "Student")
@@ -151,9 +152,9 @@ namespace LibraryManagementSystem
         {
             string userId = txtUserId.Text.Trim();
             string fullName = txtFullName.Text.Trim();
-            string course = txtCourse.Text.Trim();
             string type = (cmbType.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "Student";
             string yearLevel = type == "Student" ? (cmbYearLevel.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "": "";
+            string course = type == "Student" ? txtCourse.Text.Trim() : "";
             string email = txtEmail.Text.Trim();
 
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(fullName))
@@ -276,9 +277,10 @@ namespace LibraryManagementSystem
         }
         private void cmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (pnlYearLevel == null) return;
+            if (pnlYearLevel == null || pnlCourse == null) return;
             string type = (cmbType.SelectedItem as ComboBoxItem)?.Content.ToString();
             pnlYearLevel.Visibility = type == "Student" ? Visibility.Visible : Visibility.Collapsed;
+            pnlCourse.Visibility = type == "Student" ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

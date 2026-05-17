@@ -9,11 +9,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="64.456"/>
+                <RowDefinition Height="17.834"/>
             </Grid.RowDefinitions>
 
             <!-- Summary Cards -->
-            <Grid Grid.Row="0" Margin="0 0 0 16">
+            <Grid Grid.Row="0" Margin="0,0,0,16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -54,7 +55,7 @@
                         Padding="16"
                         Margin="0 0 10 0">
                     <StackPanel>
-                        <TextBlock Text="TOTAL STUDENTS"
+                        <TextBlock Text="TOTAL BORROWERS"
                                    FontSize="10" Foreground="#6B7280"
                                    FontWeight="SemiBold"
                                    Margin="0 0 0 6"/>
@@ -118,7 +119,7 @@
             </Grid>
 
             <!-- Two column tables -->
-            <Grid Grid.Row="1" Margin="0 0 0 16">
+            <Grid Margin="0,125,0,16" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -240,11 +241,11 @@
             </Grid>
 
             <!-- Overdue Students -->
-            <Border Grid.Row="2"
+            <Border Grid.Row="1"
                     Background="White"
                     BorderBrush="#E5E7EB"
                     BorderThickness="1"
-                    CornerRadius="8">
+                    CornerRadius="8" Margin="0,98,0,0" Grid.RowSpan="3">
                 <StackPanel>
                     <TextBlock Text="Overdue Students"
                                FontSize="13" FontWeight="Bold"
@@ -288,8 +289,8 @@
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Student"      Binding="{Binding full_name}"   Width="*"/>
-                            <DataGridTextColumn Header="Student ID"   Binding="{Binding user_id}"     Width="110"/>
+                            <DataGridTextColumn Header="Name"      Binding="{Binding full_name}"   Width="*"/>
+                            <DataGridTextColumn Header="User/Student ID"   Binding="{Binding user_id}"     Width="110"/>
                             <DataGridTextColumn Header="Book"         Binding="{Binding title}"       Width="*"/>
                             <DataGridTextColumn Header="Due Date"     Width="110">
                                 <DataGridTextColumn.Binding>
